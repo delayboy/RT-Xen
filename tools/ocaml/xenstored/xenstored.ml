@@ -180,9 +180,11 @@ let from_channel store cons doms chan =
 			in
 		Connections.add_domain cons ndom;
 		in
-	let watch_f domid path token = 
+	let watch_f domid (path: bytes) (token: bytes) = 
+		let path_bytes = Bytes.to_string path in
+		let token_bytes = Bytes.to_string token in
 		let con = Connections.find_domain cons domid in
-		ignore (Connections.add_watch cons con path token)
+		ignore (Connections.add_watch cons con path_bytes token_bytes)
 		in
 	let store_f path perms value =
 		op.Store.write path value;

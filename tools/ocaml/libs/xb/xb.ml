@@ -85,7 +85,7 @@ let read_mmap back con s len =
 let read con s len =
 	match con.backend with
 	| Fd backfd     -> read_fd backfd con s len
-	| Xenmmap backmmap -> read_mmap backmmap con s len
+	| Xenmmap backmmap -> read_mmap backmmap con (Bytes.to_string s)  len
 
 let write_fd back con s len =
 	Unix.write back.fd s 0 len

@@ -371,8 +371,10 @@ out:
 		}
 		while (!list_empty(head)) {
 			image = list_entry(&head->next, td_image_t, next);
-			td_close(image);
-			tapdisk_image_free(image);
+			if (image) {
+				td_close(image);
+				tapdisk_image_free(image);
+			}
 		}
 	}
 
@@ -1668,7 +1670,7 @@ out:
 
 		params.sector_size = image.secsize;
 		params.capacity    = image.size;
-		snprintf(params.name, sizeof(params.name) - 1, "%s", message);
+		snprintf(params.name, sizeof(params.name), "%s", message);
 
 		ioctl(vbd->ring.fd, BLKTAP2_IOCTL_SET_PARAMS, &params);
 		td_flag_clear(vbd->state, TD_VBD_PAUSED);

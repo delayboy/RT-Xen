@@ -13,7 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  */
-
+#include <sys/sysmacros.h>  // 这个头文件定义了 major 和 minor 宏
 #include "libxl_osdeps.h" /* must come before any other headers */
 
 #include "libxl_internal.h"
@@ -327,15 +327,15 @@ char *libxl__device_disk_string_of_backend(libxl_disk_backend backend)
     }
 }
 
-int libxl__device_physdisk_major_minor(const char *physpath, int *major, int *minor)
+int libxl__device_physdisk_major_minor(const char *physpath, int *majorNum, int *minorNum)
 {
     struct stat buf;
     if (stat(physpath, &buf) < 0)
         return -1;
     if (!S_ISBLK(buf.st_mode))
         return -1;
-    *major = major(buf.st_rdev);
-    *minor = minor(buf.st_rdev);
+    *majorNum = major(buf.st_rdev);
+    *minorNum = minor(buf.st_rdev);
     return 0;
 }
 

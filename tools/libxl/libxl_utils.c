@@ -477,12 +477,8 @@ int libxl__remove_directory(libxl__gc *gc, const char *dirpath)
     struct dirent *de;
 
     for (;;) {
-        int r = readdir_r(d, de_buf, &de);
-        if (r) {
-            LOGE(ERROR, "failed to readdir %s for removal", dirpath);
-            rc = ERROR_FAIL;
-            break;
-        }
+     
+        de = readdir(d);
         if (!de)
             break;
 
