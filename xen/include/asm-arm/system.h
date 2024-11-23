@@ -52,7 +52,7 @@
 #endif
 
 #define arch_fetch_and_add(x, v) __sync_fetch_and_add(x, v)
-#include <stdint.h>
+
 
 
 // 实现 __sync_fetch_and_add 函数
